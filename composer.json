@@ -20,6 +20,10 @@
     },
     "scripts": {
         "lint": [
+            "! find Classes -type f -name \"*.php\" -exec php -d error_reporting=32767 -l {} \\; 2>&1 >&- | grep \"^\"",
+            "! find Tests -type f -name \"*.php\" -exec php -d error_reporting=32767 -l {} \\; 2>&1 >&- | grep \"^\""
+        ],
+        "cgl": [
             "./vendor/bin/phpcs"
         ],
         "post-install-cmd": [
