@@ -1,0 +1,22 @@
+{
+    "name": "saccas/mjml",
+    "description": "Mjml view using mjml over npm",
+    "type": "typo3-cms-extension",
+    "version": "1.0.0",
+    "homepage": "https://mjml.io",
+    "license": ["GPL-2.0+"],
+    "autoload": {
+        "psr-4": {
+            "Saccas\\Mjml\\": "Classes/"
+        }
+    },
+    "require": {
+        "php": ">=7.0.0 <=7.2.99",
+        "typo3/cms-core": ">=8.7.0,<8.9.99"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "npm install"
+        ]
+    }
+}

@@ -1,0 +1,14 @@
+# ide
+/.project
+/.buildpath
+/.settings
+/.nbproject
+/.idea
+
+# git
+/.auth.json
+
+# node / grunt / sass / bower
+.sass-cache
+node_modules
+bower_components
