@@ -12,3 +12,7 @@
 .sass-cache
 node_modules
 bower_components
+composer.lock
+package-lock.json
+typo3
+vendor

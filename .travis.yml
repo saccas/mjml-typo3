@@ -12,3 +12,4 @@ install:
 script:
   - composer lint
   - composer cgl
+  - composer test
