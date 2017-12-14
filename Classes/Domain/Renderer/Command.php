@@ -6,7 +6,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class Command implements RendererInterface
 {
-    protected function getHtmlFromMjml($mjml)
+    public function getHtmlFromMjml($mjml)
     {
         $configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mjml']);
 
