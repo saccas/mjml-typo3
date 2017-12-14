@@ -9,7 +9,7 @@ use TYPO3\CMS\Core\Utility\CommandUtility;
 
 class MjmlBasedView extends StandaloneView
 {
-    function render($actionName = null)
+    public function render($actionName = null)
     {
         return $this->getHtmlFromMjml(parent::render());
     }
@@ -32,7 +32,7 @@ class MjmlBasedView extends StandaloneView
 
         GeneralUtility::unlink_tempfile($temporaryMjmlFileWithPath);
 
-        return implode('',$result);
+        return implode('', $result);
     }
 
     /**
@@ -40,7 +40,8 @@ class MjmlBasedView extends StandaloneView
      * @param string $args
      * @return string
      */
-    private function getEscapedCommand(string $cmd, string $args) {
+    private function getEscapedCommand(string $cmd, string $args)
+    {
         $escapedCmd = escapeshellcmd($cmd);
 
         $argsArray = explode(' ', $args);

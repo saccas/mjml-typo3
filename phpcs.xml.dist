@@ -5,7 +5,7 @@
     <file>./Classes/</file>
 
     <!-- Set default settings -->
-    <arg value="sp"/>
+    <arg value="s"/>
     <arg name="colors"/>
     <arg name="encoding" value="utf-8" />
     <arg name="extensions" value="php" />
