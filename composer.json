@@ -25,12 +25,6 @@
         "typo3/cms": "^8.7.0",
         "typo3/testing-framework": "^1.2.2"
     },
-    "extra": {
-        "typo3/cms": {
-            "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "web-dir": "typo3"
-        }
-    },
     "scripts": {
         "lint": [
             "! find Classes -type f -name \"*.php\" -exec php -d error_reporting=32767 -l {} \\; 2>&1 >&- | grep \"^\"",
@@ -40,10 +34,21 @@
             "./vendor/bin/phpcs"
         ],
         "test": [
-            "TYPO3_PATH_ROOT=typo3 ./vendor/bin/phpunit"
+            "TYPO3_PATH_ROOT=web ./vendor/bin/phpunit"
         ],
         "post-install-cmd": [
             "npm install"
         ]
+    },
+    "replace": {
+        "mjml": "self.version",
+        "typo3-ter/mjml": "self.version"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "mjml",
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "web-dir": "web"
+        }
     }
 }

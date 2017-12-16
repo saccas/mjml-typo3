@@ -14,5 +14,5 @@ node_modules
 bower_components
 composer.lock
 package-lock.json
-typo3
+web
 vendor
