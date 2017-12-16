@@ -1,34 +1,29 @@
 <?php
-
 namespace Saccas\Mjml\View;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Saccas\Mjml\Domain\Renderer\RendererInterface;
 use TYPO3\CMS\Fluid\View\StandaloneView;
-use TYPO3\CMS\Core\Utility\CommandUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class MjmlBasedView extends StandaloneView
 {
-    function render()
+    /**
+     * @var RendererInterface
+     */
+    protected $renderer;
+
+    public function __construct(ContentObjectRenderer $contentObject = null, RendererInterface $renderer = null)
     {
-        return $this->getHtmlFromMjml(parent::render());
+        parent::__construct($contentObject);
+
+        $this->renderer = $renderer;
+        if ($this->renderer === null) {
+            $this->renderer = $this->objectManager->get(RendererInterface::class);
+        }
     }
 
-    protected function getHtmlFromMjml($mjml)
+    public function render($actionName = null)
     {
-        $configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mjml']);
-
-        $temporaryMjmlFileWithPath = GeneralUtility::tempnam('mjml_', '.mjml');
-        $mjmlFile = fopen($temporaryMjmlFileWithPath, 'w');
-        fwrite($mjmlFile, $mjml);
-        fclose($mjmlFile);
-
-        // see https://mjml.io/download and https://www.npmjs.com/package/mjml-cli
-        $cmd = $configuration['nodeBinaryPath'] . ' ' . $configuration['mjmlBinaryPath'] . $configuration['mjmlBinary'] .' ' . $configuration['mjmlParams'] . ' ' . $temporaryMjmlFileWithPath;
-
-        $result = [];
-        $returnValue = '';
-        CommandUtility::exec($cmd, $result, $returnValue);
-
-        return implode('',$result);
+        return $this->renderer->getHtmlFromMjml(parent::render($actionName));
     }
 }
