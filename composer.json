@@ -35,17 +35,8 @@
         "test": [
             "TYPO3_PATH_ROOT=web ./vendor/bin/phpunit"
         ],
-        "npmInstall": [
-            "npm install"
-        ],
         "post-install-cmd": [
-            "composer npmInstall"
-        ],
-        "post-package-install": [
-            "composer npmInstall"
-        ],
-        "post-package-update" : [
-            "composer npmInstall"
+            "npm install"
         ]
     },
     "replace": {
