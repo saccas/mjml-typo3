@@ -31,3 +31,21 @@ TYPO3:
 ## MJML Documentation
 
 https://mjml.io/documentation/
+
+## Usage in your distribution
+
+To automate the installation of the npm packages, you could add the following lines to your composer.json
+
+```
+	"scripts": {
+		"post-install-cmd": [
+			"cd web/typo3conf/ext/mjml && npm prune --production"
+		],
+		"post-update-cmd": [
+			"cd web/typo3conf/ext/mjml && npm prune --production"
+		],
+		"pre-deploy": [
+			"cd web/typo3conf/ext/mjml && npm prune --production"
+		]
+	}
+```
