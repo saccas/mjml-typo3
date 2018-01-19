@@ -3,6 +3,7 @@ namespace Saccas\Mjml\Domain\Renderer;
 
 use TYPO3\CMS\Core\Utility\CommandUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 class Command implements RendererInterface
 {
@@ -15,11 +16,12 @@ class Command implements RendererInterface
         GeneralUtility::writeFileToTypo3tempDir($temporaryMjmlFileWithPath, $mjml);
 
         // see https://mjml.io/download and https://www.npmjs.com/package/mjml-cli
-        $cmd = $configuration['nodeBinaryPath'] . ' ' . $configuration['mjmlBinaryPath'] . $configuration['mjmlBinary'];
+        $cmd = $configuration['nodeBinaryPath'] . ' ' . ExtensionManagementUtility::extPath('mjml') . $configuration['mjmlBinaryPath'] . $configuration['mjmlBinary'];
         $args = $configuration['mjmlParams'] . ' ' . $temporaryMjmlFileWithPath;
 
         $result = [];
         $returnValue = '';
+
         CommandUtility::exec($this->getEscapedCommand($cmd, $args), $result, $returnValue);
 
         GeneralUtility::unlink_tempfile($temporaryMjmlFileWithPath);

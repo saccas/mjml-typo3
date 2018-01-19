@@ -1,11 +1,11 @@
-# cat=node/Binary/1000; type=string; label=Path to node binary
-nodeBinaryPath = /usr/local/bin/node
+# cat=node/Binary/1000; type=string; label=Path to node binary : /usr/bin/node
+nodeBinaryPath = /usr/bin/node
 
-# cat=mjml/Binary/2000; type=string; label=Path to mjml binary
-mjmlBinaryPath = ../node_modules/.bin/
+# cat=mjml/Binary/2000; type=string; label=Path to mjml binary in mjml EXT folder : ./node_modules/.bin/
+mjmlBinaryPath = ./node_modules/.bin/
 
-# cat=mjml/Binary/3000; type=string; label=mjml binary
+# cat=mjml/Binary/3000; type=string; label=mjml binary : mjml
 mjmlBinary = mjml
 
-# cat=mjml/Binary/4000; type=string; label=mjml params
+# cat=mjml/Binary/4000; type=string; label=mjml params : -s -m
 mjmlParams = -s -m
