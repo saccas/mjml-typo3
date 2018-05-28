@@ -17,7 +17,7 @@ class Command implements RendererInterface
 
         // see https://mjml.io/download and https://www.npmjs.com/package/mjml-cli
         $cmd = $configuration['nodeBinaryPath'] . ' ' . ExtensionManagementUtility::extPath('mjml') . $configuration['mjmlBinaryPath'] . $configuration['mjmlBinary'];
-        $args = $configuration['mjmlParams'] . ' ' . $temporaryMjmlFileWithPath;
+        $args = $temporaryMjmlFileWithPath . ' ' . $configuration['mjmlParams'];
 
         $result = [];
         $returnValue = '';

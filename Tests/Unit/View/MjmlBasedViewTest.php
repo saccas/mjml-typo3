@@ -9,23 +9,21 @@ class MjmlBasedViewTest extends AbstractUnitTestCase
 {
     public const EXAMPLE_MJML_TEMPLATE = '<mjml>
   <mj-body>
-    <mj-container>
-      <mj-section>
-        <mj-column>
-          <mj-image src="/assets/img/easy-and-quick.png" width="112" />
-          <mj-text font-size="20px" color="#595959" align="center">Easy and Quick</mj-text>
-        </mj-column>
-        <mj-column>
-          <mj-image src="/assets/img/responsive.png" width="135" />
-          <mj-text font-size="20px" color="#595959" align="center">Responsive</mj-text>
-        </mj-column>
-      </mj-section>
-      <mj-section>
-        <mj-column>
-          <mj-button background-color="#F45E43" font-size="15px">Discover</mj-button>
-        </mj-column>
-      </mj-section>
-    </mj-container>
+    <mj-section>
+      <mj-column>
+        <mj-image src="/assets/img/easy-and-quick.png" width="112px" />
+        <mj-text font-size="20px" color="#595959" align="center">Easy and Quick</mj-text>
+      </mj-column>
+      <mj-column>
+        <mj-image src="/assets/img/responsive.png" width="135px" />
+        <mj-text font-size="20px" color="#595959" align="center">Responsive</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-button background-color="#F45E43" font-size="15px">Discover</mj-button>
+      </mj-column>
+    </mj-section>
   </mj-body>
 </mjml>
 ';
