@@ -73,18 +73,13 @@ class CommandTest extends AbstractUnitTestCase
             'mjmlParams' => '-s',
         ]);
 
-        $expectedHtml = file_get_contents(dirname(__FILE__) . '/CommandTestFixture/Expected.html');
-        $expectedHtml = str_replace(["\r", "\n"], '', $expectedHtml);
-
         $subject = $this->objectManager->get(Command::class);
         $html = $subject->getHtmlFromMjml(static::EXAMPLE_MJML_TEMPLATE);
-
         // remove comment rendered by the outputToConsole https://github.com/mjmlio/mjml/blob/50b08513b7a651c234829abfde254f106a62c859/packages/mjml-cli/src/commands/outputToConsole.js#L4
         $html = preg_replace('/<!-- FILE: (.*)-->/Uis', '', $html);
-        $html = str_replace(["\r", "\n"], '', $html);
 
-        $this->assertSame(
-            $expectedHtml,
+        $this->assertStringEqualsFile(
+            dirname(__FILE__) . '/CommandTestFixture/Expected.html',
             $html,
             'Command renderer did not return expected HTML.'
         );
