@@ -75,8 +75,10 @@ class CommandTest extends AbstractUnitTestCase
 
         $subject = $this->objectManager->get(Command::class);
         $html = $subject->getHtmlFromMjml(static::EXAMPLE_MJML_TEMPLATE);
+
         // remove comment rendered by the outputToConsole https://github.com/mjmlio/mjml/blob/50b08513b7a651c234829abfde254f106a62c859/packages/mjml-cli/src/commands/outputToConsole.js#L4
         $html = preg_replace('/<!-- FILE: (.*)-->/Uis', '', $html);
+        $html = str_replace(["\r", "\n"], '', $html);
 
         $this->assertStringEqualsFile(
             dirname(__FILE__) . '/CommandTestFixture/Expected.html',
