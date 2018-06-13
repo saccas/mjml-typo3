@@ -70,7 +70,7 @@ class CommandTest extends AbstractUnitTestCase
             'nodeBinaryPath' => 'node',
             'mjmlBinaryPath' => 'node_modules/mjml/bin/',
             'mjmlBinary' => 'mjml',
-            'mjmlParams' => '-s',
+            'mjmlParams' => '-s --config.beautify true --config.minify true',
         ]);
 
         $subject = $this->objectManager->get(Command::class);
@@ -78,7 +78,6 @@ class CommandTest extends AbstractUnitTestCase
 
         // remove comment rendered by the outputToConsole https://github.com/mjmlio/mjml/blob/50b08513b7a651c234829abfde254f106a62c859/packages/mjml-cli/src/commands/outputToConsole.js#L4
         $html = preg_replace('/<!-- FILE: (.*)-->/Uis', '', $html);
-        $html = str_replace(["\r", "\n"], '', $html);
 
         $this->assertStringEqualsFile(
             dirname(__FILE__) . '/CommandTestFixture/Expected.html',
