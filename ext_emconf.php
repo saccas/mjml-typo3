@@ -5,7 +5,7 @@ $EM_CONF[$_EXTKEY] = [
     'description' => 'Mjml view using mjml over npm',
     'category' => 'misc',
     'shy' => 0,
-    'version' => '1.0.0',
+    'version' => '1.0.1',
     'state' => 'stable',
     'clearCacheOnLoad' => 1,
     'author' => '',
@@ -17,8 +17,8 @@ $EM_CONF[$_EXTKEY] = [
         ],
     'constraints' => [
         'depends' => [
-            'php' => '7.0.0-0.0.0',
-            'typo3' => '8.7.*',
+            'php' => '7.1.0-7.2.99',
+            'typo3' => '8.7.0-8.7.99',
             'extbase' => '',
         ],
         'conflicts' => [
