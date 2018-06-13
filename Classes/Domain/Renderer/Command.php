@@ -9,15 +9,17 @@ class Command implements RendererInterface
 {
     public function getHtmlFromMjml($mjml)
     {
-        $configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mjml']);
+        $conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mjml']);
 
         $temporaryMjmlFileWithPath = GeneralUtility::tempnam('mjml_', '.mjml');
 
         GeneralUtility::writeFileToTypo3tempDir($temporaryMjmlFileWithPath, $mjml);
 
+        $mjmlExtPath = ExtensionManagementUtility::extPath('mjml');
+
         // see https://mjml.io/download and https://www.npmjs.com/package/mjml-cli
-        $cmd = $configuration['nodeBinaryPath'] . ' ' . ExtensionManagementUtility::extPath('mjml') . $configuration['mjmlBinaryPath'] . $configuration['mjmlBinary'];
-        $args = $temporaryMjmlFileWithPath . ' ' . $configuration['mjmlParams'];
+        $cmd = $conf['nodeBinaryPath'] . ' ' . $mjmlExtPath . $conf['mjmlBinaryPath'] . $conf['mjmlBinary'];
+        $args = $temporaryMjmlFileWithPath . ' ' . $conf['mjmlParams'];
 
         $result = [];
         $returnValue = '';
