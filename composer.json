@@ -40,7 +40,6 @@
         ]
     },
     "replace": {
-        "mjml": "self.version",
         "typo3-ter/mjml": "self.version"
     },
     "extra": {
