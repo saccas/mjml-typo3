@@ -3,7 +3,7 @@
     "description": "Mjml view using mjml over npm",
     "type": "typo3-cms-extension",
     "homepage": "https://mjml.io",
-    "license": ["GPL-2.0+"],
+    "license": ["GPL-2.0-or-later"],
     "autoload": {
         "psr-4": {
             "Saccas\\Mjml\\": "Classes/"
@@ -40,7 +40,6 @@
         ]
     },
     "replace": {
-        "mjml": "self.version",
         "typo3-ter/mjml": "self.version"
     },
     "extra": {
