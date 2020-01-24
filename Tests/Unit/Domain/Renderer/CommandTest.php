@@ -16,27 +16,6 @@ class CommandTest extends AbstractUnitTestCase
      */
     protected $objectManager;
 
-    public const EXAMPLE_MJML_TEMPLATE = '<mjml>
-  <mj-body>
-    <mj-section>
-      <mj-column>
-        <mj-image src="/assets/img/easy-and-quick.png" width="112px" />
-        <mj-text font-size="20px" color="#595959" align="center">Easy and Quick</mj-text>
-      </mj-column>
-      <mj-column>
-        <mj-image src="/assets/img/responsive.png" width="135px" />
-        <mj-text font-size="20px" color="#595959" align="center">Responsive</mj-text>
-      </mj-column>
-    </mj-section>
-    <mj-section>
-      <mj-column>
-        <mj-button background-color="#F45E43" font-size="15px">Discover</mj-button>
-      </mj-column>
-    </mj-section>
-  </mj-body>
-</mjml>
-';
-
     public function setUp()
     {
         parent::setUp();
@@ -54,7 +33,7 @@ class CommandTest extends AbstractUnitTestCase
             ->getMock();
         $packageMock->expects($this->any())
             ->method('getPackagePath')
-            ->willReturn(dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/');
+            ->willReturn(dirname(__FILE__, 5) . '/');
         $packageManagerMock = $this->getMockBuilder(PackageManager::class)->getMock();
         $packageManagerMock->expects($this->any())
             ->method('isPackageActive')
@@ -74,13 +53,14 @@ class CommandTest extends AbstractUnitTestCase
         ]);
 
         $subject = $this->objectManager->get(Command::class);
-        $html = $subject->getHtmlFromMjml(static::EXAMPLE_MJML_TEMPLATE);
+        $mjml = file_get_contents(__DIR__ . '/CommandTestFixture/Basic.mjml');
+        $html = $subject->getHtmlFromMjml($mjml);
 
         // remove comment rendered by the outputToConsole https://github.com/mjmlio/mjml/blob/50b08513b7a651c234829abfde254f106a62c859/packages/mjml-cli/src/commands/outputToConsole.js#L4
         $html = preg_replace('/<!-- FILE: (.*)-->/Uis', '', $html);
 
         $this->assertStringEqualsFile(
-            dirname(__FILE__) . '/CommandTestFixture/Expected.html',
+            __DIR__ . '/CommandTestFixture/Expected.html',
             $html,
             'Command renderer did not return expected HTML.'
         );
