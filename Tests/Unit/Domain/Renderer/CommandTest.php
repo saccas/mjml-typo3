@@ -3,6 +3,7 @@ namespace Saccas\Mjml\Tests\Functional\Domain\Renderer;
 
 use Saccas\Mjml\Domain\Renderer\Command;
 use Saccas\Mjml\Tests\Unit\AbstractUnitTestCase;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Package\Package;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -45,7 +46,7 @@ class CommandTest extends AbstractUnitTestCase
             ->willReturn($packageMock);
         ExtensionManagementUtility::setPackageManager($packageManagerMock);
 
-        $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mjml'] = serialize([
+        GeneralUtility::makeInstance(ExtensionConfiguration::class)->set('mjml', '', [
             'nodeBinaryPath' => 'node',
             'mjmlBinaryPath' => 'node_modules/mjml/bin/',
             'mjmlBinary' => 'mjml',
