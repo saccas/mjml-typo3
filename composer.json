@@ -16,8 +16,8 @@
     },
     "require": {
         "php": "^7.4",
-        "typo3/cms-core": "^9.5.0 || ^10.4.0",
-        "typo3/cms-form": "^9.5.0 || ^10.4.0"
+        "typo3/cms-core": "^9.5.0 || ^10.4.10",
+        "typo3/cms-form": "^9.5.0 || ^10.4.10"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.2.0",
