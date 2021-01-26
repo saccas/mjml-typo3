@@ -7,7 +7,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 class Command implements RendererInterface
 {
-    public function getHtmlFromMjml($mjml)
+    public function getHtmlFromMjml($mjml): string
     {
         $conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mjml']);
 
@@ -36,7 +36,7 @@ class Command implements RendererInterface
      * @param string $args
      * @return string
      */
-    protected function getEscapedCommand(string $cmd, string $args)
+    protected function getEscapedCommand(string $cmd, string $args): string
     {
         $escapedCmd = escapeshellcmd($cmd);
 
