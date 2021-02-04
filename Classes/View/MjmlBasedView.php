@@ -7,7 +7,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class MjmlBasedView extends StandaloneView
 {
-    protected RendererInterface $renderer;
+    protected ?RendererInterface $renderer = null;
 
     public function __construct(ContentObjectRenderer $contentObject = null, RendererInterface $renderer = null)
     {
