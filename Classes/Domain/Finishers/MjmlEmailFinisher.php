@@ -15,7 +15,7 @@ class MjmlEmailFinisher extends \TYPO3\CMS\Form\Domain\Finishers\EmailFinisher
      * @return StandaloneView
      * @throws FinisherException
      */
-    protected function initializeStandaloneView(FormRuntime $formRuntime, string $format): StandaloneView
+    protected function initializeStandaloneView(FormRuntime $formRuntime, string $format = 'Html'): StandaloneView
     {
         $standaloneView = $this->objectManager->get(MjmlBasedView::class);
 
