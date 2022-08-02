@@ -2,6 +2,8 @@
 namespace Saccas\Mjml\View;
 
 use Saccas\Mjml\Domain\Renderer\RendererInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
@@ -15,7 +17,8 @@ class MjmlBasedView extends StandaloneView
 
         $this->renderer = $renderer;
         if ($this->renderer === null) {
-            $this->renderer = $this->objectManager->get(RendererInterface::class);
+            $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+            $this->renderer = $objectManager->get(RendererInterface::class);
         }
     }
 
