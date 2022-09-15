@@ -8,4 +8,4 @@ mjmlBinaryPath = ./node_modules/mjml/bin/
 mjmlBinary = mjml
 
 # cat=mjml/Binary/4000; type=string; label=mjml params : -s --config.beautify true --config.minify true
-mjmlParams = -s --config.beautify true --config.minify true
+mjmlParams = -s --config.beautify true --config.minify true --noStdoutFileComment
