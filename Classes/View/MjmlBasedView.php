@@ -1,23 +1,24 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Saccas\Mjml\View;
 
 use Saccas\Mjml\Domain\Renderer\RendererInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 class MjmlBasedView extends StandaloneView
 {
-    protected ?RendererInterface $renderer = null;
+    protected RendererInterface $renderer;
 
-    public function __construct(ContentObjectRenderer $contentObject = null, RendererInterface $renderer = null)
-    {
+    public function __construct(
+        ContentObjectRenderer $contentObject,
+        RendererInterface $renderer
+    ) {
         parent::__construct($contentObject);
 
         $this->renderer = $renderer;
-        if ($this->renderer === null) {
-            $this->renderer = GeneralUtility::makeInstance(RendererInterface::class);
-        }
     }
 
     public function render($actionName = null): string

@@ -8,9 +8,17 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 class Command implements RendererInterface
 {
+    private ExtensionConfiguration $extensionConfiguration;
+
+    public function __construct(
+        ExtensionConfiguration $extensionConfiguration
+    ) {
+        $this->extensionConfiguration = $extensionConfiguration;
+    }
+
     public function getHtmlFromMjml($mjml): string
     {
-        $conf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('mjml');
+        $conf = $this->extensionConfiguration->get('mjml');
 
         $temporaryMjmlFileWithPath = GeneralUtility::tempnam('mjml_', '.mjml');
 
