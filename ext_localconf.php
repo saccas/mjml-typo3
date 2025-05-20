@@ -1,8 +1,6 @@
 <?php
 
-if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
-}
+defined('TYPO3') || die();
 
 \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)->registerImplementation(
     \Saccas\Mjml\Domain\Renderer\RendererInterface::class,
