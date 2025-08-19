@@ -1,64 +1,83 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Saccas\Mjml\Domain\Finishers;
 
-use TYPO3\CMS\Fluid\View\StandaloneView;
+use Psr\Http\Message\ServerRequestInterface;
+use Saccas\Mjml\Mail\MjmlFluidEmail;
+use TYPO3\CMS\Core\Mail\FluidEmail;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\View\TemplatePaths;
+use TYPO3\CMS\Form\Domain\Finishers\EmailFinisher;
 use TYPO3\CMS\Form\Domain\Finishers\Exception\FinisherException;
 use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
 use TYPO3\CMS\Form\ViewHelpers\RenderRenderableViewHelper;
-use Saccas\Mjml\View\MjmlBasedView;
 
-class MjmlEmailFinisher extends \TYPO3\CMS\Form\Domain\Finishers\EmailFinisher
+class MjmlEmailFinisher extends EmailFinisher
 {
-    /**
-     * @param FormRuntime $formRuntime
-     * @param string $format
-     * @return StandaloneView
-     * @throws FinisherException
-     */
-    protected function initializeStandaloneView(FormRuntime $formRuntime, string $format = 'Html'): StandaloneView
+    protected function initializeFluidEmail(FormRuntime $formRuntime): FluidEmail
     {
-        $standaloneView = $this->objectManager->get(MjmlBasedView::class);
+        $templateConfiguration = $GLOBALS['TYPO3_CONF_VARS']['MAIL'];
 
-        if (isset($this->options['templatePathAndFilename'])) {
-            $this->options['templatePathAndFilename'] = strtr($this->options['templatePathAndFilename'], [
-                '{@format}' => $format
+        if (is_array($this->options['templateRootPaths'] ?? null)) {
+            $templateConfiguration['templateRootPaths'] = array_replace_recursive(
+                $templateConfiguration['templateRootPaths'],
+                $this->options['templateRootPaths']
+            );
+            ksort($templateConfiguration['templateRootPaths']);
+        }
+
+        if (is_array($this->options['partialRootPaths'] ?? null)) {
+            $templateConfiguration['partialRootPaths'] = array_replace_recursive(
+                $templateConfiguration['partialRootPaths'],
+                $this->options['partialRootPaths']
+            );
+            ksort($templateConfiguration['partialRootPaths']);
+        }
+
+        if (is_array($this->options['layoutRootPaths'] ?? null)) {
+            $templateConfiguration['layoutRootPaths'] = array_replace_recursive(
+                $templateConfiguration['layoutRootPaths'],
+                $this->options['layoutRootPaths']
+            );
+            ksort($templateConfiguration['layoutRootPaths']);
+        }
+
+        $fluidEmail = GeneralUtility::makeInstance(
+            MjmlFluidEmail::class,
+            GeneralUtility::makeInstance(TemplatePaths::class, $templateConfiguration)
+        );
+
+        if (!isset($this->options['templateName']) || $this->options['templateName'] === '') {
+            throw new FinisherException('The option "templateName" must be set to use FluidEmail.', 1599834020);
+        }
+
+        // Migrate old template name to default FluidEmail name
+        if ($this->options['templateName'] === '{@format}.html') {
+            $this->options['templateName'] = 'Default';
+        }
+
+        // Set the PSR-7 request object if available
+        if (($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface) {
+            $fluidEmail->setRequest($GLOBALS['TYPO3_REQUEST']);
+        }
+
+        $fluidEmail
+            ->setTemplate($this->options['templateName'])
+            ->assignMultiple([
+                'finisherVariableProvider' => $this->finisherContext->getFinisherVariableProvider(),
+                'form' => $formRuntime,
             ]);
-            $standaloneView->setTemplatePathAndFilename($this->options['templatePathAndFilename']);
-        } else {
-            if (!isset($this->options['templateName'])) {
-                throw new FinisherException('The option "templateName" must be set for the EmailFinisher.', 1327058829);
-            }
-            // Use local variable instead of augmenting the options to
-            // keep the format intact when sending multi-format mails
-            $templateName = strtr($this->options['templateName'], [
-                '{@format}' => $format
-            ]);
-            $standaloneView->setTemplate($templateName);
+
+        if (is_array($this->options['variables'] ?? null)) {
+            $fluidEmail->assignMultiple($this->options['variables']);
         }
 
-        $standaloneView->assign('finisherVariableProvider', $this->finisherContext->getFinisherVariableProvider());
-
-        if (isset($this->options['templateRootPaths']) && is_array($this->options['templateRootPaths'])) {
-            $standaloneView->setTemplateRootPaths($this->options['templateRootPaths']);
-        }
-
-        if (isset($this->options['partialRootPaths']) && is_array($this->options['partialRootPaths'])) {
-            $standaloneView->setPartialRootPaths($this->options['partialRootPaths']);
-        }
-
-        if (isset($this->options['layoutRootPaths']) && is_array($this->options['layoutRootPaths'])) {
-            $standaloneView->setLayoutRootPaths($this->options['layoutRootPaths']);
-        }
-
-        if (isset($this->options['variables'])) {
-            $standaloneView->assignMultiple($this->options['variables']);
-        }
-
-        $standaloneView->assign('form', $formRuntime);
-        $standaloneView->getRenderingContext()
+        $fluidEmail
             ->getViewHelperVariableContainer()
             ->addOrUpdate(RenderRenderableViewHelper::class, 'formRuntime', $formRuntime);
 
-        return $standaloneView;
+        return $fluidEmail;
     }
 }

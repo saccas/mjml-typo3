@@ -2,7 +2,23 @@ services:
   _defaults:
     autowire: true
     autoconfigure: true
-    public: false
+    public: true
 
   Saccas\Mjml\:
     resource: '../Classes/*'
+
+  configuration.mjml:
+    class: array
+    factory:
+      - '@TYPO3\CMS\Core\Configuration\ExtensionConfiguration'
+      - 'get'
+    arguments:
+      - 'mjml'
+
+  Saccas\Mjml\Domain\Renderer\Command:
+    arguments:
+      $config: '@configuration.mjml'
+
+  Saccas\Mjml\Domain\Renderer\RendererInterface: '@Saccas\Mjml\Domain\Renderer\Command'
+
+  Saccas\Mjml\Mail\MjmlHtmlToTextInterface: '@Saccas\Mjml\Mail\MjmlHtmlToText'

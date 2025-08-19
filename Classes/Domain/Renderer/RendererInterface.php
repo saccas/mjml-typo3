@@ -8,9 +8,6 @@ interface RendererInterface
 {
     /**
      * Convert mjml strings into html.
-     *
-     * @param string $mjml
-     * @return string
      */
-    public function getHtmlFromMjml($mjml): string;
+    public function getHtmlFromMjml(string $mjml): string;
 }
