@@ -22,7 +22,7 @@ or create your own.
 ```
 TYPO3:
   CMS:
-    Form:   
+    Form:
       mixins:
         finishersEmailMixin:
           implementationClassName: 'Saccas\Mjml\Domain\Finishers\MjmlEmailFinisher'
@@ -39,13 +39,13 @@ To automate the installation of the npm packages, you could add the following li
 ```
 	"scripts": {
 		"post-install-cmd": [
-			"cd web/typo3conf/ext/mjml && npm prune --production"
+			"cd vendor/saccas/mjml && npm prune --production"
 		],
 		"post-update-cmd": [
-			"cd web/typo3conf/ext/mjml && npm prune --production"
+			"cd vendor/saccas/mjml && npm prune --production"
 		],
 		"pre-deploy": [
-			"cd web/typo3conf/ext/mjml && npm prune --production"
+			"cd vendor/saccas/mjml && npm prune --production"
 		]
 	}
 ```
