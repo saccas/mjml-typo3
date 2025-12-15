@@ -1,4 +1,5 @@
 <?php
+
 namespace Saccas\Mjml\Domain\Renderer;
 
 /**

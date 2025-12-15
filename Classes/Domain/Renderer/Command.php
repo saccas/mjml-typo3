@@ -1,9 +1,10 @@
 <?php
+
 namespace Saccas\Mjml\Domain\Renderer;
 
 use TYPO3\CMS\Core\Utility\CommandUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class Command implements RendererInterface
 {
@@ -18,11 +19,11 @@ class Command implements RendererInterface
     ];
 
     /**
-     * @param $config array{nodeBinaryPath: string, mjmlBinaryPath: string, mjmlBinary: string, mjmlParams: string}
+     * @param array{nodeBinaryPath: string, mjmlBinaryPath: string, mjmlBinary: string, mjmlParams: string} $config
      */
-    public function __construct(array $config = [])
+    public function __construct(array $config)
     {
-        $this->config = array_merge($this->config, $config); // @phpstan-ignore-line
+        $this->config = array_merge($this->config, $config);
     }
 
     public function getHtmlFromMjml(string $mjml): string
@@ -43,6 +44,10 @@ class Command implements RendererInterface
         CommandUtility::exec($this->getEscapedCommand($cmd, $args), $result, $returnValue);
 
         GeneralUtility::unlink_tempfile($temporaryMjmlFileWithPath);
+
+        if (is_null($result)) {
+            return '';
+        }
 
         return implode('', $result);
     }
