@@ -13,10 +13,10 @@ use TYPO3\CMS\Fluid\View\TemplatePaths;
 
 class MjmlFluidEmail extends FluidEmail
 {
-    public const string MJML_FORMAT_HTML = 'html';
-    public const string MJML_FORMAT_TXT = 'txt';
+    public const MJML_FORMAT_HTML = 'html';
+    public const MJML_FORMAT_TXT = 'txt';
 
-    public const array MJML_FORMATS = [
+    public const MJML_FORMATS = [
         self::MJML_FORMAT_HTML,
         self::MJML_FORMAT_TXT,
     ];

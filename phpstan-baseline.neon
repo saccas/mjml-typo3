@@ -1,0 +1,37 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Cannot access offset ''MAIL'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: Classes/Domain/Finishers/MjmlEmailFinisher.php
+
+		-
+			message: '#^Cannot access offset ''layoutRootPaths'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Classes/Domain/Finishers/MjmlEmailFinisher.php
+
+		-
+			message: '#^Cannot access offset ''partialRootPaths'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Classes/Domain/Finishers/MjmlEmailFinisher.php
+
+		-
+			message: '#^Cannot access offset ''templateRootPaths'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: Classes/Domain/Finishers/MjmlEmailFinisher.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_replace_recursive expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 3
+			path: Classes/Domain/Finishers/MjmlEmailFinisher.php
+
+		-
+			message: '#^Parameter \#1 \$templateName of method TYPO3\\CMS\\Core\\Mail\\FluidEmail\:\:setTemplate\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Finishers/MjmlEmailFinisher.php

@@ -1,0 +1,155 @@
+name: 'CI'
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+
+jobs:
+  check-composer:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: 'actions/checkout@v3'
+
+      - name: 'Install PHP'
+        uses: 'shivammathur/setup-php@v2'
+        with:
+          php-version: '8.4'
+          coverage: 'none'
+          tools: 'composer:v2'
+        env:
+          COMPOSER_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: 'Validate composer.json'
+        run: 'composer validate'
+
+  php-linting:
+    runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        php-version:
+          - '8.2'
+          - '8.3'
+          - '8.4'
+          - '8.5'
+    steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@v3'
+
+      - name: 'Install PHP'
+        uses: 'shivammathur/setup-php@v2'
+        with:
+          php-version: '${{ matrix.php-version }}'
+          coverage: 'none'
+
+      - name: 'PHP lint'
+        run: |
+          find *.php Classes Configuration Tests -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
+
+  coding-guideline:
+    runs-on: 'ubuntu-latest'
+    needs:
+      - 'check-composer'
+    steps:
+      - uses: 'actions/checkout@v3'
+
+      - name: 'Install PHP'
+        uses: 'shivammathur/setup-php@v2'
+        with:
+          php-version: '8.4'
+          coverage: 'none'
+          tools: 'composer:v2'
+        env:
+          COMPOSER_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: 'Install dependencies'
+        run: 'composer install --no-progress --no-interaction --optimize-autoloader'
+
+      - name: 'Coding Guideline'
+        run: './vendor/bin/php-cs-fixer fix --dry-run --diff'
+
+  tests:
+    runs-on: 'ubuntu-latest'
+    needs:
+      - 'check-composer'
+    strategy:
+      matrix:
+        include:
+          - php-version: '8.2'
+            typo3-version: '^13.4'
+          - php-version: '8.3'
+            typo3-version: '^13.4'
+          - php-version: '8.4'
+            typo3-version: '^13.4'
+          - php-version: '8.5'
+            typo3-version: '^13.4'
+    steps:
+      - uses: 'actions/checkout@v3'
+
+      - name: 'Install NodeJS'
+        uses: 'actions/setup-node@v4'
+
+      - name: 'Install node packages'
+        run: 'npm ci'
+
+      - name: 'Install PHP'
+        uses: 'shivammathur/setup-php@v2'
+        with:
+          php-version: '${{ matrix.php-version }}'
+          coverage: 'xdebug'
+          tools: 'composer:v2'
+        env:
+          COMPOSER_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: 'Install dependencies with expected TYPO3 version'
+        run: 'composer require --no-progress --no-interaction --optimize-autoloader "typo3/cms-core:${{ matrix.typo3-version }}"'
+
+      - name: 'PHPUnit Tests'
+        run: './vendor/bin/phpunit --testdox --display-all-issues --coverage-cobertura coverage/coverage.cobertura.xml'
+
+      - name: 'Code Coverage Report'
+        uses: 'irongut/CodeCoverageSummary@v1.3.0'
+        with:
+          filename: 'coverage/coverage.cobertura.xml'
+          badge: false
+          fail_below_min: true
+          format: 'text'
+          hide_branch_rate: true
+          hide_complexity: true
+          indicators: true
+          output: 'console'
+          thresholds: '40 100'
+
+  phpstan:
+    runs-on: 'ubuntu-latest'
+    needs:
+      - 'check-composer'
+    strategy:
+      matrix:
+        include:
+          - php-version: '8.2'
+            typo3-version: '^13.4'
+          - php-version: '8.3'
+            typo3-version: '^13.4'
+          - php-version: '8.4'
+            typo3-version: '^13.4'
+          - php-version: '8.5'
+            typo3-version: '^13.4'
+    steps:
+      - uses: 'actions/checkout@v3'
+
+      - name: 'Install PHP'
+        uses: 'shivammathur/setup-php@v2'
+        with:
+          php-version: '${{ matrix.php-version }}'
+          coverage: 'none'
+          tools: 'composer:v2'
+        env:
+          COMPOSER_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: 'Install dependencies with expected TYPO3 version'
+        run: 'composer require --no-progress --no-interaction --optimize-autoloader "typo3/cms-core:${{ matrix.typo3-version }}"'
+
+      - name: 'PHPStan'
+        run: './vendor/bin/phpstan'

@@ -1,6 +1,6 @@
 # MJML
 
-https://mjml.io integration for **TYPO3 EXT:Form**
+https://mjml.io integration for TYPO3
 
 MJML is a markup language designed to reduce the pain of coding a responsive email. Its semantic syntax makes it easy and straightforward and its rich standard components library speeds up your development time and lightens your email codebase. MJML’s open-source engine generates high quality responsive HTML compliant with best practices. https://mjml.io/getting-started-onboard
 
@@ -49,3 +49,14 @@ To automate the installation of the npm packages, you could add the following li
 		]
 	}
 ```
+
+## Changelog
+
+### v3.0.0
+
+* Support TYPO3 v13.
+* Add basic CI with QA tooling.
+
+### v2.0.0
+
+Support TYPO3 v11.

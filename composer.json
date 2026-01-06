@@ -3,6 +3,12 @@
     "description": "Mjml view using mjml over npm",
     "type": "typo3-cms-extension",
     "homepage": "https://mjml.io",
+    "keywords": [
+        "TYPO3",
+        "extension",
+        "email",
+        "mjml"
+    ],
     "license": ["GPL-2.0-or-later"],
     "autoload": {
         "psr-4": {
@@ -16,37 +22,34 @@
     },
     "require": {
         "php": "^8.2",
+        "html2text/html2text": "^4.3",
         "typo3/cms-core": "^13.4",
-        "typo3/cms-form": "^13.4",
-        "html2text/html2text": "^4.3"
-	},
+        "typo3/cms-form": "^13.4"
+    },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.2.0",
-        "typo3/testing-framework": "^1.2.2 || ^6.16"
+        "phpstan/extension-installer": "^1.4",
+        "saschaegerer/phpstan-typo3": "^2.1",
+        "typo3/coding-standards": "^0.8.0",
+        "typo3/testing-framework": "^9.3"
     },
     "scripts": {
-        "lint": [
-            "! find Classes -type f -name \"*.php\" -exec php -d error_reporting=32767 -l {} \\; 2>&1 >&- | grep \"^\"",
-            "! find Tests -type f -name \"*.php\" -exec php -d error_reporting=32767 -l {} \\; 2>&1 >&- | grep \"^\""
-        ],
-        "cgl": [
-            "./vendor/bin/phpcs"
-        ],
-        "test": [
-            "TYPO3_PATH_ROOT=web ./vendor/bin/phpunit"
-        ],
         "post-install-cmd": [
             "npm install"
         ]
     },
-    "replace": {
-        "typo3-ter/mjml": "self.version"
-    },
     "extra": {
         "typo3/cms": {
             "extension-key": "mjml",
-            "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "web-dir": "web"
+            "web-dir": ".Build/web"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "lock": false,
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
         }
     }
 }
