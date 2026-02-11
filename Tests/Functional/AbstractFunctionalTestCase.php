@@ -24,7 +24,7 @@ abstract class AbstractFunctionalTestCase extends FunctionalTestCase
                     'nodeBinaryPath' => getenv('NODE_BIN_PATH') ?: 'node',
                     'mjmlBinaryPath' => 'node_modules/mjml/bin/',
                     'mjmlBinary' => 'mjml',
-                    'mjmlParams' => '-s --config.beautify true --noStdoutFileComment',
+                    'mjmlParams' => '-s --config.beautify true --config.minify true',
                 ],
             ],
         ];
