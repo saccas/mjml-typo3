@@ -1,6 +1,6 @@
 {
   "name": "mjml-typo3",
   "dependencies": {
-    "mjml": "v5.0.0-alpha.10"
+    "mjml": "v5.0.0-alpha.11"
   }
 }
