@@ -28,6 +28,8 @@ TYPO3:
           implementationClassName: 'Saccas\Mjml\Domain\Finishers\MjmlEmailFinisher'
 ```
 
+NOTE: If not defined explicitly within the `<mjml>` root tag, `lang="und"` ("undefined language") is rendered in the email's `<html>` tag now.
+
 ## MJML Documentation
 
 https://mjml.io/documentation/
