@@ -10,10 +10,10 @@ jobs:
   check-composer:
     runs-on: 'ubuntu-latest'
     steps:
-      - uses: 'actions/checkout@v3'
+      - uses: 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' # v4
 
       - name: 'Install PHP'
-        uses: 'shivammathur/setup-php@v2'
+        uses: 'shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f' # v2
         with:
           php-version: '8.4'
           coverage: 'none'
@@ -35,10 +35,10 @@ jobs:
           - '8.5'
     steps:
       - name: 'Checkout'
-        uses: 'actions/checkout@v3'
+        uses: 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' # v4
 
       - name: 'Install PHP'
-        uses: 'shivammathur/setup-php@v2'
+        uses: 'shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f' # v2
         with:
           php-version: '${{ matrix.php-version }}'
           coverage: 'none'
@@ -52,10 +52,10 @@ jobs:
     needs:
       - 'check-composer'
     steps:
-      - uses: 'actions/checkout@v3'
+      - uses: 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' # v4
 
       - name: 'Install PHP'
-        uses: 'shivammathur/setup-php@v2'
+        uses: 'shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f' # v2
         with:
           php-version: '8.4'
           coverage: 'none'
@@ -85,16 +85,16 @@ jobs:
           - php-version: '8.5'
             typo3-version: '^13.4'
     steps:
-      - uses: 'actions/checkout@v3'
+      - uses: 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' # v4
 
       - name: 'Install NodeJS'
-        uses: 'actions/setup-node@v4'
+        uses: 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' # v4
 
       - name: 'Install node packages'
         run: 'npm ci'
 
       - name: 'Install PHP'
-        uses: 'shivammathur/setup-php@v2'
+        uses: 'shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f' # v2
         with:
           php-version: '${{ matrix.php-version }}'
           coverage: 'xdebug'
@@ -109,7 +109,7 @@ jobs:
         run: './vendor/bin/phpunit --testdox --display-all-issues --coverage-cobertura coverage/coverage.cobertura.xml'
 
       - name: 'Code Coverage Report'
-        uses: 'irongut/CodeCoverageSummary@v1.3.0'
+        uses: 'irongut/CodeCoverageSummary@51cc3a756ddcd398d447c044c02cb6aa83fdae95' # v1.3.0
         with:
           filename: 'coverage/coverage.cobertura.xml'
           badge: false
@@ -137,10 +137,10 @@ jobs:
           - php-version: '8.5'
             typo3-version: '^13.4'
     steps:
-      - uses: 'actions/checkout@v3'
+      - uses: 'actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5' # v4
 
       - name: 'Install PHP'
-        uses: 'shivammathur/setup-php@v2'
+        uses: 'shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f' # v2
         with:
           php-version: '${{ matrix.php-version }}'
           coverage: 'none'
