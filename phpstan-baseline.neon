@@ -35,3 +35,9 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: Classes/Domain/Finishers/MjmlEmailFinisher.php
+
+		-
+			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: Classes/Domain/Renderer/Command.php
