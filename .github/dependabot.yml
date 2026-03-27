@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/.github/workflows"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "18:00"
+      timezone: "Europe/Berlin"
+
+    target-branch: "main"
+
+    cooldown:
+      default-days: 14
+
+    pull-request-branch-name:
+      separator: "-"
